@@ -1,0 +1,5 @@
+/* ===== Pilote 2 : sous-titres un cran plus petits, 2 lignes max ===== */
+#cap{bottom:470px!important;font-size:calc(90px * var(--fs,1))!important}
+#cap.rel{bottom:430px!important;font-size:calc(80px * var(--fs,1))!important}
+#cta .q{font-size:112px!important}
+#cta .vs span{white-space:nowrap;font-size:54px!important}

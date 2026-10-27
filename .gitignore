@@ -1,0 +1,9 @@
+node_modules/
+frames*/
+q*/
+p*/voice*.wav
+p*/mix.wav
+sfx/*.wav
+music/*.wav
+*.log
+__pycache__/
