@@ -23,13 +23,26 @@ jobs:
       - uses: actions/checkout@v4
         with: { fetch-depth: 1 }
 
-      - uses: actions/setup-node@v4
+      - name: Déjà un épisode dans les 20 dernières heures ?
+        id: guard
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          last=$(gh release list --repo "$GITHUB_REPOSITORY" --limit 1 --json createdAt --jq '.[0].createdAt' 2>/dev/null || true)
+          if [ "$GITHUB_EVENT_NAME" = "schedule" ] && [ -n "$last" ] && [ $(( $(date +%s) - $(date -d "$last" +%s) )) -lt 72000 ]; then
+            echo "skip=true" >> "$GITHUB_OUTPUT"; echo "Épisode déjà fait récemment : on saute."
+          fi
+
+      - if: steps.guard.outputs.skip != 'true'
+        uses: actions/setup-node@v4
         with: { node-version: "20" }
 
-      - uses: actions/setup-python@v5
+      - if: steps.guard.outputs.skip != 'true'
+        uses: actions/setup-python@v5
         with: { python-version: "3.12" }
 
       - name: Installer les outils
+        if: steps.guard.outputs.skip != 'true'
         run: |
           sudo apt-get update -qq
           sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji >/dev/null
@@ -38,6 +51,7 @@ jobs:
           npx playwright install --with-deps chromium >/dev/null
 
       - name: Fabriquer l'épisode (Claude via l'API)
+        if: steps.guard.outputs.skip != 'true'
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
@@ -48,7 +62,7 @@ jobs:
         timeout-minutes: 150
 
       - name: Publier la vidéo et prévenir Elliot
-        if: always()
+        if: always() && steps.guard.outputs.skip != 'true'
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           METRICOOL_USER_TOKEN: ${{ secrets.METRICOOL_USER_TOKEN }}
@@ -57,7 +71,7 @@ jobs:
         run: python3 robot/finish.py
 
       - name: Sauvegarder le journal et la banque de sujets
-        if: always()
+        if: always() && steps.guard.outputs.skip != 'true'
         run: |
           git config user.name "Robot Vrai ou Faux"
           git config user.email "robot@users.noreply.github.com"

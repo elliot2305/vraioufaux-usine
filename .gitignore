@@ -13,3 +13,7 @@ videos/*.mp4
 !videos/02_regle5secondes.mp4
 !videos/03_craquersesdoigts.mp4
 *.pyc
+sfx/*.wav
+music/*.wav
+*.log
+__pycache__/
