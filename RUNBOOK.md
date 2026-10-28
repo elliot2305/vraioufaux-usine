@@ -1,6 +1,6 @@
 # Usine « Vrai ou Faux » — mode d'emploi d'un épisode
 
-Ce fichier est la référence pour la tâche programmée de chaque nuit. Le lire en entier avant de commencer.
+Ce fichier est la référence de chaque épisode. Le lire en entier avant de commencer. En mode robot (GitHub Actions), lire d'abord robot/ROBOT.md, qui passe avant ce fichier.
 Compte : TikTok d'Elliot (ancien @rediff_first, renommé « Vrai ou Faux »), publié via Metricool.
 
 ## 0. Identifiants fixes
@@ -13,7 +13,7 @@ Compte : TikTok d'Elliot (ancien @rediff_first, renommé « Vrai ou Faux »), pu
   (l'URL raw.githubusercontent est refusée par Metricool ; la forme github.com/…/raw/… marche. Metricool copie le fichier chez lui.)
 
 ## 1. Règles éditoriales validées par Elliot (ne pas les re-discuter)
-- Structure (≈ 70–85 s, toujours > 60 s) : accroche → **3-2-1** silencieux avec tics → **voix « Faux ! »** (prise réutilisée) → « La vérité… est bien pire » (prise réutilisée, NON chuchotée) → faits en escalade → relances r1/r2/r3 (prises réutilisées) → conseil utile → **chuchotement** « Bon. Le truc que tu vas regretter… » (prise r46_b) → **rupture** (fondu au noir, plongée caméra, pas d'explosion) → la bombe → nuance → **fin = un avis tranché qui crée un camp contre l'autre** (pas une simple question « tous les combien ? »), puis écran « LE VRAI DÉBAT » avec deux boutons de camp.
+- Structure (≈ 70–85 s, toujours > 60 s) : accroche → **3-2-1 dit par la voix de Lucie** (« Trois… deux… un… », prise réutilisée wav/cd_a.wav) avec les tics → **voix « Faux ! »** (prise réutilisée) → « La vérité… est bien pire » (prise réutilisée, NON chuchotée) → faits en escalade → relances r1/r2/r3 (prises réutilisées) → conseil utile → **chuchotement** « Bon. Le truc que tu vas regretter… » (prise r46_b) → **rupture** (fondu au noir, plongée caméra, pas d'explosion) → la bombe → nuance → **fin = un avis tranché qui crée un camp contre l'autre** (pas une simple question « tous les combien ? »), puis écran « LE VRAI DÉBAT » avec deux boutons de camp.
 - Pas de cartons plein écran pour les relances : sous-titre jaune en majuscules sur l'image qui continue.
 - Visuels : fonds de couleurs vives différents à chaque plan, écrans coupés (split) 2–3 fois, plâtre blanc qui prend ses couleurs au FAUX, mur de plâtre qui éclate à l'entrée du « monde » principal, émojis sur les mots forts, étiquettes (CHIPS) et gros chiffres (POPS).
 - Habillage = celui de `pilote3.html` (bandeau pilule ronde, sous-titres Montserrat « mot surligné », tailles du pilote 3). Elliot trouve que c'est encore un peu gros : ne pas grossir.

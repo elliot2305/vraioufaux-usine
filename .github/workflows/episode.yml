@@ -1,0 +1,66 @@
+name: Vrai ou Faux — épisode du jour
+
+on:
+  schedule:
+    - cron: "17 0 * * *"        # 01h17 à Paris (heure d'hiver), publication prévue à 12h30
+  workflow_dispatch: {}          # bouton « Run workflow » dans l'onglet Actions
+  push:
+    paths: ["robot/GO"]          # modifier ce fichier lance un épisode tout de suite
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: episode
+  cancel-in-progress: false
+
+jobs:
+  episode:
+    runs-on: ubuntu-latest
+    timeout-minutes: 170
+    steps:
+      - uses: actions/checkout@v4
+        with: { fetch-depth: 1 }
+
+      - uses: actions/setup-node@v4
+        with: { node-version: "20" }
+
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+
+      - name: Installer les outils
+        run: |
+          sudo apt-get update -qq
+          sudo apt-get install -y -qq ffmpeg fonts-noto-color-emoji >/dev/null
+          pip install -q claude-agent-sdk==0.2.172 numpy scipy pillow
+          ./setup.sh
+          npx playwright install --with-deps chromium >/dev/null
+
+      - name: Fabriquer l'épisode (Claude via l'API)
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ROBOT_MODEL: ${{ vars.ROBOT_MODEL || 'claude-sonnet-5-5' }}
+          ROBOT_BUDGET_USD: ${{ vars.ROBOT_BUDGET_USD || '6' }}
+          TZ: Europe/Paris
+        run: python3 robot/run.py
+        timeout-minutes: 150
+
+      - name: Publier la vidéo et prévenir Elliot
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          METRICOOL_USER_TOKEN: ${{ secrets.METRICOOL_USER_TOKEN }}
+          METRICOOL_USER_ID: ${{ secrets.METRICOOL_USER_ID }}
+          ROBOT_AUTO: ${{ vars.ROBOT_AUTO }}
+        run: python3 robot/finish.py
+
+      - name: Sauvegarder le journal et la banque de sujets
+        if: always()
+        run: |
+          git config user.name "Robot Vrai ou Faux"
+          git config user.email "robot@users.noreply.github.com"
+          git add -A LEARNINGS.md robot/sujets.json wav/cd_a.wav wav/cd.json p[0-9]*/ 2>/dev/null || true
+          git commit -m "Épisode du $(TZ=Europe/Paris date +%d/%m) (robot)" || echo "rien à enregistrer"
+          git pull --rebase -q && git push -q || echo "push impossible"
