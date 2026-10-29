@@ -75,6 +75,6 @@ jobs:
         run: |
           git config user.name "Robot Vrai ou Faux"
           git config user.email "robot@users.noreply.github.com"
-          git add -A LEARNINGS.md robot/sujets.json wav/cd_a.wav wav/cd.json p[0-9]*/ 2>/dev/null || true
+          git add -A LEARNINGS.md robot/sujets.json robot/logs/ wav/cd_a.wav wav/cd.json p[0-9]*/ 2>/dev/null || true
           git commit -m "Épisode du $(TZ=Europe/Paris date +%d/%m) (robot)" || echo "rien à enregistrer"
           git pull --rebase -q && git push -q || echo "push impossible"

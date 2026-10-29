@@ -10,6 +10,7 @@ Tout ce qui est écrit ici **passe avant le RUNBOOK**. Pour le reste (règles é
 - **Ne fais ni commit, ni push, ni publication** : le workflow s'en charge après toi.
 
 ## 1. Sujet : `robot/sujets.json` (remplace le Google Sheet)
+- **Reprise** : si un sujet est déjà « En cours » et que son dossier `pNN/` existe, c'est un épisode commencé la nuit d'avant : reprends-le (ne refais pas ce qui est fini, la voix est déjà dans `pNN/tr_a.json`, `pNN/tr_b.json` ; les .wav ne sont pas gardés : regénère seulement ceux qui manquent avec `robot/tts.py`).
 - Prends le meilleur `score` dont `statut` = « À produire », en respectant l'alternance des familles (LEARNINGS.md : au plus 1 sujet « sale » sur 3, jamais deux « hygiène » d'affilée).
 - Passe son `statut` à « En cours » dès le début, puis à « Prêt JJ/MM 12h30 » à la fin (ou « À produire » si tu échoues).
 - Numéro d'épisode NN = le plus grand numéro trouvé dans `videos/` et dans les statuts, plus 1, sur 2 chiffres.
@@ -25,7 +26,7 @@ Tout ce qui est écrit ici **passe avant le RUNBOOK**. Pour le reste (règles é
 
 ## 3. Compte à rebours 3-2-1 DIT PAR LA VOIX (demande d'Elliot du 28/10)
 - Le 3-2-1 n'est plus silencieux : Lucie dit « Trois… deux… un… ».
-- Si `wav/cd_a.wav` n'existe pas encore : `echo '{"cd": "Trois… [short pause] deux… [short pause] un…"}' > cd.json && python3 robot/tts.py cdtmp cd.json`, garde la prise la plus nette (débit posé, environ une seconde par chiffre), copie-la en `wav/cd_a.wav` et ses mots en `wav/cd.json` (`{"cd": [...]}`). Elle sera réutilisée par tous les épisodes suivants (le workflow la garde dans le dépôt).
+- Si `wav/cd_a.wav` ou `wav/cd.json` manque : `echo '{"cd": "Trois… [short pause] deux… [short pause] un…"}' > cd.json && python3 robot/tts.py cdtmp cd.json`, garde la prise la plus nette (débit posé, environ une seconde par chiffre), copie-la en `wav/cd_a.wav` et ses mots en `wav/cd.json` (`{"cd": [...]}`). Elle sera réutilisée par tous les épisodes suivants (le workflow la garde dans le dépôt).
 - Dans `pNN/build.py` : à la place de `pad(COUNTDOWN)` après le hook, insère l'audio `wav/cd_a.wav` (découpé comme les autres segments) et pose les marques `cd3`, `cd2`, `cd1` = début de chaque mot (« trois », « deux », « un »), plus `cd0` (début) et `cd1end` (fin).
 - Dans `pNN/mid.js` : `const CD=[M.cd3,M.cd2,M.cd1]` pour que chaque chiffre affiché tombe pile sur le chiffre dit. Garde les tics.
 - Au contrôle, vérifie (marques de la timeline + planches) que les chiffres affichés et la voix sont calés.
