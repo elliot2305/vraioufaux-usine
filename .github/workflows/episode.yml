@@ -1,8 +1,8 @@
 name: Vrai ou Faux — épisode du jour
 
 on:
-  schedule:
-    - cron: "17 0 * * *"        # 01h17 à Paris (heure d'hiver), publication prévue à 12h30
+  # schedule:  (en pause depuis le 29/10 : changement de format en cours)
+  #   - cron: "17 0 * * *"        # 01h17 à Paris (heure d'hiver), publication prévue à 12h30
   workflow_dispatch: {}          # bouton « Run workflow » dans l'onglet Actions
   push:
     paths: ["robot/GO"]          # modifier ce fichier lance un épisode tout de suite
