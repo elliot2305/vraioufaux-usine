@@ -12,7 +12,7 @@ def R(x,y):
 R("fetch('timeline.json')","fetch('timeline_p4.json')")
 R("<s>Tu avales <b>8&nbsp;araignées</b> par an en&nbsp;dormant&nbsp;?</s>","<s>Les moustiques piquent <b>tout le monde pareil</b>&nbsp;?</s>")
 R('<div class="dog">🐶</div><div class="k">LE VRAI DÉBAT</div>\n   <div class="q">Ton chien dans le&nbsp;lit&nbsp;?</div>\n   <div class="vs"><span class="g">PROPRE</span><em>OU</em><span class="r">DÉGUEU</span></div>',
-  '<div class="dog">🦟</div><div class="k">LE VRAI DÉBAT</div>\n   <div class="q">Moustiques&nbsp;?</div>\n   <div class="vs"><span class="g">AIMANT À PIQÛRES</span><em>OU</em><span class="r">JAMAIS PIQUÉ</span></div>')
+  '<div class="dog">🦟</div><div class="k">LE VRAI DÉBAT</div>\n   <div class="q">Moustiques&nbsp;?</div>\n   <div class="vs"><span class="g">AIMANT</span><em>OU</em><span class="r">JAMAIS PIQUÉ</span></div>')
 css=open('p2/extra.css').read()+"""
 #cap{font-size:calc(80px * var(--fs,1))!important;bottom:440px!important}
 #cap.rel{font-size:calc(72px * var(--fs,1))!important;bottom:420px!important}

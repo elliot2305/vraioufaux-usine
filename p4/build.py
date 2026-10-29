@@ -4,7 +4,7 @@ SR = 44100; TEMPO = 1.08
 FAST = {'a','b','c','e','g','i','i2'}
 S4 = {s['id']: s for s in json.load(open('sessions.json'))['segments']}; P4 = json.load(open('picks.json')); TR4 = json.load(open('tr.json'))['transcripts']
 T6 = json.load(open('tr6.json')); TP = json.load(open('p4/tr.json'))
-PICK = {'hook':'a','a':'a','b':'a','c':'a','e':'b','g':'a','i':'a','i2':'b','j':'b'}
+PICK = {'hook':'b','a':'a','b':'a','c':'b','e':'b','g':'b','i':'b','i2':'a','j':'b'}
 SRC = {**{k: (f'p4/wav/{k}_{v}.wav', TP[k]) for k, v in PICK.items()}, 'pire': ('wav/pire6_a.wav', T6['pire']), 'r4': ('wav/r46_b.wav', T6['r4'])}
 CDW = json.load(open('wav/cd.json'))['cd']
 LEAD, COUNTDOWN, RUPTURE, OUTRO = .12, 1.35, .75, 3.0
